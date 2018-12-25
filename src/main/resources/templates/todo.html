@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <meta charset="UTF-8" />
+        <title>Todo list</title>
+    </head>
+    <body>
+
+        <h2>Todo list</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Task name</th><th>Delete task</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${todos.empty}">
+                    <td colspan="2">No tasks yet - add some and be a busy bee!</td>
+                </tr>
+                <tr th:each="todo : ${todos}">
+                    <td th:utext="${todo.name}">Task name</td>
+                    <td><form th:action="@{/items/{id}(id=${todo.id})}" th:method="delete"><input type="submit" value="Task done, remove"/></form></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <form method="POST" action="/items" enctype="multipart/form-data">
+            <input type="text" name="name" id="todo"/>
+            <input type="submit" value="Add a new task"/>
+        </form>
+
+    </body>
+</html>
